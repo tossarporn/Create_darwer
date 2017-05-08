@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,14 +36,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         navArray.add("Fragement");
         navArray.add("Fragement2");
         navArray.add("Fragement3");
-        navArray.add("Fragement4");
-        navArray.add("Fragement5");
         navList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_activated_1, navArray);
         navList.setAdapter(adapter);
         navList.setOnItemClickListener(this);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.opendrawer,R.string.closedrawer);
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
+
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
@@ -77,10 +77,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 fragmentTransaction.replace(R.id.fragmentholder, myfragment2);
                 fragmentTransaction.commit();
                  break;
-            case 4 : break;
-            case 5 : break;
         }
-
     }
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
@@ -89,11 +86,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-        } else {
             if (id == android.R.id.home) {
                 if (drawerLayout.isDrawerOpen(navList)) {
                     drawerLayout.closeDrawer(navList);
@@ -101,12 +100,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     drawerLayout.openDrawer(navList);
                 }
             }
-        }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        loadSelection(i);
         drawerLayout.closeDrawer(navList);
     }
 }//main class
